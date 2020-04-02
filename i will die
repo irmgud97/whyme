@@ -1,0 +1,36 @@
+%getting all information from a site 
+
+close all
+clc
+url = 'http://www.bestchange.ru/bm/info.zip';
+unzip(url,cd)
+global ALL_rates_data_search kaupiam ChainSize
+fileID = fopen('bm_cy.dat','r','n','windows-1251');
+C1 = textscan(fileID,'%n %n %s %s %s %s %s ','Delimiter',';','EmptyValue',NaN);
+fclose(fileID);
+% ID currency | xx | Name of currency | xx; xx; xx
+fileID = fopen('bm_exch.dat','r','n','windows-1251');
+C2 = textscan(fileID,'%n %s %s %s %s  ','Delimiter',';','EmptyValue',NaN);
+fclose(fileID);
+% ID EXCHANGER | Name of EXCHANGER | xxxxxxxxxxxxxxxxxxxx | xx; xx; xx; xx
+fileID = fopen('bm_rates.dat','r','n','windows-1251');
+C3 = textscan(fileID,'%n %n %n %n %n %n %n %n','Delimiter',';','EmptyValue',NaN);
+fclose(fileID);
+% ID_from _Curr | ID_to_Curr | ID_CHANGER | rate GIVE | rate GET | Reserve | xx | xx
+%displaying
+disp('== Market Data Reading Done ==')
+
+% Read all the market and now we have three files. bm-cy.dat , bm_exch.dat and bm_rates.dat
+%In bm_rates files theres  ID_from _Curr | ID_to_Curr | ID_CHANGER | rate GIVE | rate GET | Reserve | xx | xx
+%We need only rateGIVE and rate GET and divide it  and make a plot 
+%~~~~~Getting which exchanger
+
+%destytojo atsiustos eilutes
+for a=1:8 %nes 8 kiek matau visur yra ilgis 
+    %Nors cia turetu buti i=1:8
+Rate_tmp(i)=ALL_rates_data(iB,5)/ALL_rates_data(iB,4); %get/give 
+%rasom viska 4 kita array tai butu GetdivGive(a)=Rate_tmp(i)
+%i=i+1
+%Amount_tmp=ALL_rates_data(iB,6);%or max from 4,5,6 columns
+end
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
